@@ -14,13 +14,13 @@ import android.widget.EditText;
 
 import com.mjwag.momcount.R;
 
-public class AlarmContentFragment extends DialogFragment{
+public class AlarmContentFragment extends DialogFragment {
 
     private EditText mName;
     private EditText mEndDate;
     private Alarm mAlarm;
 
-    public static AlarmContentFragment newInstance(Alarm alarm){
+    public static AlarmContentFragment newInstance(Alarm alarm) {
         Bundle args = new Bundle();
         args.putSerializable("alarm", alarm);
 
@@ -30,37 +30,38 @@ public class AlarmContentFragment extends DialogFragment{
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
-        mAlarm = (Alarm)getArguments().getSerializable("alarm");
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        mAlarm = (Alarm) getArguments().getSerializable("alarm");
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.alarm_content, null);
 
-        mName = (EditText)v.findViewById(R.id.edit_alarm_name);
-        mEndDate = (EditText)v.findViewById(R.id.edit_end_date);
+        mName = (EditText) v.findViewById(R.id.edit_alarm_name);
+        mEndDate = (EditText) v.findViewById(R.id.edit_end_date);
 
         mName.setText(mAlarm.getmTitle());
         mEndDate.setText(mAlarm.getmEndTime());
 
-        return  new AlertDialog.Builder(getActivity())
+        return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.edit_alarm)
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                sendResult(Activity.RESULT_OK, mName.getText().toString(),mEndDate.getText());
+                                sendResult(Activity.RESULT_OK, mName.getText().toString(), mEndDate.getText());
                             }
                         })
                 .create();
     }
 
-    private void sendResult(int resultCode, String fName, int fEndDate ){
-    if (getTargetFragment() != null) {
-        Intent i = new Intent();
-        mAlarm.setmTitle(fName);
-        mAlarm.setmEndTime(fEndDate);
-        i.putExtra("alarm", mAlarm);
+    private void sendResult(int resultCode, String fName, int fEndDate) {
+        if (getTargetFragment() != null) {
+            Intent i = new Intent();
+            mAlarm.setmTitle(fName);
+            mAlarm.setmEndTime(fEndDate);
+            i.putExtra("alarm", mAlarm);
 
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, i);
+            getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, i);
+        }
+
     }
-
 }
