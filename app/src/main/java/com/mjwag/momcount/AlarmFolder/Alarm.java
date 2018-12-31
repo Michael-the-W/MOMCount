@@ -1,8 +1,9 @@
 package com.mjwag.momcount.AlarmFolder;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Alarm {
+public class Alarm implements Serializable {
 
     private UUID   mAlarmID; // Alarm UUID
     private String mTitle; // Alarm Title
